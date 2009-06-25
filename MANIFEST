@@ -1,0 +1,19 @@
+bin/msgfmt.pl
+Build.PL
+Changes
+dev/compare
+dev/dump-mo
+dev/dump-po
+lib/Locale/Msgfmt.pm
+lib/Locale/Msgfmt/mo.pm
+lib/Locale/Msgfmt/po.pm
+lib/Locale/Msgfmt/Utils.pm
+MANIFEST			This list of files
+README
+t/00-load.t
+t/msgfmt.t
+t/pod.t
+t/samples/fr-fr.mo
+t/samples/fr-fr.po
+Makefile.PL
+META.yml

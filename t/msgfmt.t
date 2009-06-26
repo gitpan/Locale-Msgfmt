@@ -1,23 +1,36 @@
 #!perl
 
-use Test::More tests => 1;
+use Test::More tests => 3;
 
 use Locale::Msgfmt;
 use File::Temp;
 
 SKIP: {
-    skip "Test needs Locale::Maketext::Gettext", 1 if(!eval("use Locale::Maketext::Gettext; 1;"));
-    my %h;
-    my $good = "";
-    %h = read_mo("t/samples/fr-fr.mo");
-    foreach(sort keys %h){$good .= $_ . " " . $h{$_} . "\n";};
-    ($fh, $filename) = File::Temp::tempfile();
-    close $fh;
-    msgfmt({in => "t/samples/fr-fr.po", out => $filename});
-    my $test = "";
-    %h = read_mo($filename);
-    foreach(sort keys %h){$test .= $_ . " " . $h{$_} . "\n";};
-    is($test, $good);
-    unlink($filename);
+    skip "Test needs Locale::Maketext::Gettext", 3 if(!eval("use Locale::Maketext::Gettext; 1;"));
+    sub my_read_mo {
+        my $str = "";
+        my %h = read_mo(shift);
+        foreach(sort keys %h){$str .= $_ . " " . $h{$_} . "\n";};
+        return $str;
+    }
+    sub my_msgfmt {
+        my ($fh, $filename) = File::Temp::tempfile();
+        close $fh;
+        msgfmt({in => shift, out => $filename});
+        return $filename;
+    }
+    sub do_one_test {
+        my $basename = shift;
+        my $po = "t/samples/" . $basename . ".po";
+        my $mo = "t/samples/" . $basename . ".mo";
+        my $good = my_read_mo($mo);
+        my $filename = my_msgfmt($po);
+        my $test = my_read_mo($filename);
+        is($test, $good);
+        unlink($filename);
+    }
+    do_one_test("fr-fr");
+    do_one_test("context");
+    do_one_test("ngettext");
 }
 

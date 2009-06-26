@@ -2,6 +2,7 @@ bin/msgfmt.pl
 Build.PL
 Changes
 dev/compare
+dev/compare-all
 dev/dump-mo
 dev/dump-po
 lib/Locale/Msgfmt.pm
@@ -13,7 +14,12 @@ README
 t/00-load.t
 t/msgfmt.t
 t/pod.t
+t/samples/build
+t/samples/context.mo
+t/samples/context.po
 t/samples/fr-fr.mo
 t/samples/fr-fr.po
+t/samples/ngettext.mo
+t/samples/ngettext.po
 Makefile.PL
 META.yml

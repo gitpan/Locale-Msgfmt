@@ -1,6 +1,6 @@
 ---
 name: Locale-Msgfmt
-version: 0.04
+version: 0.05
 author:
   - 'Ryan Niebur <ryanryan52@gmail.com>'
 abstract: Compile .po files to .mo files
@@ -12,16 +12,16 @@ build_requires:
 provides:
   Locale::Msgfmt:
     file: lib/Locale/Msgfmt.pm
-    version: 0.04
+    version: 0.05
   Locale::Msgfmt::Utils:
     file: lib/Locale/Msgfmt/Utils.pm
-    version: 0.04
+    version: 0.05
   Locale::Msgfmt::mo:
     file: lib/Locale/Msgfmt/mo.pm
-    version: 0.04
+    version: 0.05
   Locale::Msgfmt::po:
     file: lib/Locale/Msgfmt/po.pm
-    version: 0.04
+    version: 0.05
 generated_by: Module::Build version 0.33
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html

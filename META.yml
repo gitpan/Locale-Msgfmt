@@ -1,6 +1,6 @@
 ---
 name: Locale-Msgfmt
-version: 0.07
+version: 0.08
 author:
   - 'Ryan Niebur <ryanryan52@gmail.com>'
 abstract: Compile .po files to .mo files
@@ -8,21 +8,20 @@ license: perl
 resources:
   license: http://dev.perl.org/licenses/
 build_requires:
-  Locale::Maketext::Gettext: 1.28
   Test::More: 0
 provides:
   Locale::Msgfmt:
     file: lib/Locale/Msgfmt.pm
-    version: 0.07
+    version: 0.08
   Locale::Msgfmt::Utils:
     file: lib/Locale/Msgfmt/Utils.pm
-    version: 0.07
+    version: 0.08
   Locale::Msgfmt::mo:
     file: lib/Locale/Msgfmt/mo.pm
-    version: 0.07
+    version: 0.08
   Locale::Msgfmt::po:
     file: lib/Locale/Msgfmt/po.pm
-    version: 0.07
+    version: 0.08
 generated_by: Module::Build version 0.33
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html

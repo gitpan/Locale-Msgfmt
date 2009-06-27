@@ -5,7 +5,6 @@ WriteMakefile
           'NAME' => 'Locale::Msgfmt',
           'VERSION_FROM' => 'lib/Locale/Msgfmt.pm',
           'PREREQ_PM' => {
-                           'Locale::Maketext::Gettext' => '1.28',
                            'Test::More' => 0
                          },
           'INSTALLDIRS' => 'site',

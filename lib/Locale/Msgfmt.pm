@@ -10,15 +10,46 @@ use warnings;
 
 use base 'Exporter';
 
-our @EXPORT = qw/msgfmt msgfmt_dir/;
+our @EXPORT = qw/msgfmt/;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub msgfmt {
   my $hash = shift;
+  if(!defined($hash)) {
+    die("error: must give input");
+  }
+  if(!(ref($hash) eq "HASH")) {
+    $hash = {in => $hash};
+  }
+  if(!defined($hash->{in}) or !length($hash->{in})) {
+    die("error: must give an input file");
+  }
+  if(! -e $hash->{in}) {
+    die("error: input does not exist");
+  }
+  if(-d $hash->{in}) {
+    return _msgfmt_dir($hash);
+  } else {
+    return _msgfmt($hash);
+  }
+}
+
+sub _msgfmt {
+  my $hash = shift;
+  if(! defined($hash->{in})) {
+    die("error: must give an input file");
+  }
   if(! -f $hash->{in}) {
-    print "error: input file does not exist\n";
-    exit(1);
+    die("error: input file does not exist");
+  }
+  if(! defined($hash->{out})) {
+    if($hash->{in} =~ /\.po$/) {
+      $hash->{out} = $hash->{in};
+      $hash->{out} =~ s/po$/mo/;
+    } else {
+      die("error: must give an output file");
+    }
   }
   my $mo = Locale::Msgfmt::mo->new();
   $mo->initialize();
@@ -28,11 +59,10 @@ sub msgfmt {
   $mo->out($hash->{out});
 }
 
-sub msgfmt_dir {
+sub _msgfmt_dir {
   my $hash = shift;
   if(! -d $hash->{in}) {
-    print "error: input directory does not exist\n";
-    exit(1);
+    die("error: input directory does not exist");
   }
   if(! defined($hash->{out})) {
     $hash->{out} = $hash->{in};
@@ -56,7 +86,7 @@ sub msgfmt_dir {
     my %newhash = (%{$hash});
     $newhash{in} = $_;
     $newhash{out} = $files{$_};
-    msgfmt(\%newhash);
+    _msgfmt(\%newhash);
   }
 }
 
@@ -69,12 +99,32 @@ Locale::Msgfmt - Compile .po files to .mo files
 =head1 SYNOPSIS
 
 This module does the same thing as msgfmt from GNU gettext-tools,
-except this is pure Perl.
+except this is pure Perl. The interface is best explained through
+examples:
 
     use Locale::Msgfmt;
 
+    # compile po/fr.po into po/fr.mo
     msgfmt({in => "po/fr.po", out => "po/fr.mo"});
-    msgfmt_dir({in => "po/"});
+    # compile po/fr.po into po/fr.mo and include fuzzy translations
+    msgfmt({in => "po/fr.po", out => "po/fr.mo", fuzzy => 1});
+    # compile all the .po files in the po directory, and write the .mo
+    # files to the po directory
+    msgfmt("po/");
+    # compile all the .po files in the po directory, and write the .mo
+    # files to the po directory, and include fuzzy translations
+    msgfmt({in => "po/", fuzzy => 1});
+    # compile all the .po files in the po directory, and write the .mo
+    # files to the output directory, creating the output directory if
+    # it doesn't already exist
+    msgfmt({in => "po/", out => "output/"});
+    # compile all the .po files in the po directory, and write the .mo
+    # files to the output directory, and include fuzzy translations
+    msgfmt({in => "po/", out => "output/", fuzzy => 1});
+    # compile po/fr.po into po/fr.mo
+    msgfmt("po/fr.po");
+    # compile po/fr.po into po/fr.mo and include fuzzy translations
+    msgfmt({in => "po/fr.po", fuzzy => 1});
 
 =head1 COPYRIGHT & LICENSE
 

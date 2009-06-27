@@ -3,7 +3,7 @@ package Locale::Msgfmt::Utils;
 use strict;
 use warnings;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub character {
   return map {pack "N*", $_} @_;
@@ -52,5 +52,19 @@ sub null {
 sub eot {
   return chr(4);
 }
+
+=head1 NAME
+
+Locale::Msgfmt::Utils - functions used internally by Locale::Msgfmt
+
+=head1 SYNOPSIS
+
+This module shouldn't be used by other software.
+
+=head1 SEE ALSO
+
+L<Locale::Msgfmt>
+
+=cut
 
 1;

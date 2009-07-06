@@ -9,9 +9,8 @@ lib/Locale/Msgfmt.pm
 lib/Locale/Msgfmt/mo.pm
 lib/Locale/Msgfmt/po.pm
 lib/Locale/Msgfmt/Utils.pm
-Makefile.PL
+lib/Module/Install/Msgfmt.pm
 MANIFEST			This list of files
-META.yml
 README
 t/00-load.t
 t/interface.t
@@ -27,3 +26,5 @@ t/samples/ja.mo
 t/samples/ja.po
 t/samples/ngettext.mo
 t/samples/ngettext.po
+Makefile.PL
+META.yml

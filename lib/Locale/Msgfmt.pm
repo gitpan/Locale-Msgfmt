@@ -12,7 +12,7 @@ use base 'Exporter';
 
 our @EXPORT = qw/msgfmt/;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 sub msgfmt {
 	my $hash = shift;
@@ -72,9 +72,9 @@ sub _msgfmt_dir {
 	if ( !-d $hash->{out} ) {
 		File::Path::mkpath( $hash->{out} );
 	}
-	opendir D, $hash->{in};
-	my @list = readdir D;
-	closedir D;
+	opendir my $D, $hash->{in} or die "Could not open ($hash->{in}) $!";
+	my @list = readdir $D;
+	closedir $D;
 	my @removelist = ();
 	if ( $hash->{remove} ) {
 		@removelist = grep /\.pot$/, @list;

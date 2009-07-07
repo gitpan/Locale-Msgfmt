@@ -5,7 +5,7 @@ use Locale::Msgfmt::Utils;
 use strict;
 use warnings;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 sub new {
 	my $class = shift;
@@ -89,7 +89,7 @@ sub read_po {
 				}
 			}
 		} else {
-			print "unknown line: " . $_ . "\n";
+			die("unknown line: " . $_);
 		}
 	}
 	$self->add_string( \%h );

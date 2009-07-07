@@ -12,7 +12,7 @@ use base 'Exporter';
 
 our @EXPORT = qw/msgfmt/;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 sub msgfmt {
 	my $hash = shift;
@@ -27,6 +27,9 @@ sub msgfmt {
 	}
 	if ( !-e $hash->{in} ) {
 		die("error: input does not exist");
+	}
+	if ( !defined( $hash->{verbose} ) ) {
+		$hash->{verbose} = 1;
 	}
 	if ( -d $hash->{in} ) {
 		return _msgfmt_dir($hash);
@@ -56,6 +59,7 @@ sub _msgfmt {
 	my $po = Locale::Msgfmt::po->new( { fuzzy => $hash->{fuzzy} } );
 	$po->parse( $hash->{in}, $mo );
 	$mo->prepare();
+	unlink( $hash->{out} ) if ( -f $hash->{out} );
 	$mo->out( $hash->{out} );
 	print $hash->{in} . " -> " . $hash->{out} . "\n" if ( $hash->{verbose} );
 	unlink( $hash->{in} ) if ( $hash->{remove} );
@@ -72,6 +76,7 @@ sub _msgfmt_dir {
 	if ( !-d $hash->{out} ) {
 		File::Path::mkpath( $hash->{out} );
 	}
+	print $hash->{in} . " -> " . $hash->{out} . "\n" if ( $hash->{verbose} );
 	opendir my $D, $hash->{in} or die "Could not open ($hash->{in}) $!";
 	my @list = readdir $D;
 	closedir $D;

@@ -3,7 +3,7 @@ package Locale::Msgfmt::Utils;
 use strict;
 use warnings;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 sub character {
 	return map { pack "N*", $_ } @_;
@@ -51,6 +51,10 @@ sub null {
 
 sub eot {
 	return chr(4);
+}
+
+sub mtime {
+	return @{ [ stat(shift) ] }[9];
 }
 
 =head1 NAME

@@ -26,5 +26,6 @@ t/samples/ja.mo
 t/samples/ja.po
 t/samples/ngettext.mo
 t/samples/ngettext.po
+t/version.t
 Makefile.PL
 META.yml

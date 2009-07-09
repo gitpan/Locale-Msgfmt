@@ -2,6 +2,7 @@ package Locale::Msgfmt;
 
 use Locale::Msgfmt::mo;
 use Locale::Msgfmt::po;
+use Locale::Msgfmt::Utils;
 use File::Path;
 use File::Spec;
 
@@ -12,7 +13,7 @@ use base 'Exporter';
 
 our @EXPORT = qw/msgfmt/;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 sub msgfmt {
 	my $hash = shift;
@@ -53,6 +54,11 @@ sub _msgfmt {
 		} else {
 			die("error: must give an output file");
 		}
+	}
+	unless ( $hash->{force} ) {
+		return
+			if ( -f $hash->{out}
+			&& Locale::Msgfmt::Utils::mtime( $hash->{out} ) > Locale::Msgfmt::Utils::mtime( $hash->{in} ) );
 	}
 	my $mo = Locale::Msgfmt::mo->new();
 	$mo->initialize();
